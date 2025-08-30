@@ -1,5 +1,6 @@
 package com.automatizatec.store.service;
 
+import com.automatizatec.store.dto.UserPasswordRequestDTO;
 import com.automatizatec.store.dto.UserRequestDTO;
 import com.automatizatec.store.dto.UserResponseDTO;
 
@@ -13,5 +14,9 @@ public interface UserService {
 
     UserResponseDTO save(UserRequestDTO userRequestDTO) throws Exception;
 
-    boolean verifyPassword(String rawPassword, String encodedPassword);
+    UserResponseDTO update(UserRequestDTO userRequestDTO) throws Exception;
+
+    boolean updatePassword(UserPasswordRequestDTO userPasswordRequestDTO) throws Exception;
+
+    void delete(String userId) throws Exception;
 }

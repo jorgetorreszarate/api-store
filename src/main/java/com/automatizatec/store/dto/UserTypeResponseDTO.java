@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserRequestDTO {
-    private String userId;
-    private int personalId;
-    private String password;
-    private int userTypeId;
-    private boolean flagActive;
+public class UserTypeResponseDTO {
+    private int typeId;
+    private String detail;
 }

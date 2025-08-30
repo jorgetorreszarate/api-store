@@ -1,5 +1,6 @@
 package com.automatizatec.store.controller;
 
+import com.automatizatec.store.dto.UserPasswordRequestDTO;
 import com.automatizatec.store.dto.UserRequestDTO;
 import com.automatizatec.store.dto.UserResponseDTO;
 import com.automatizatec.store.service.UserService;
@@ -70,6 +71,46 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO userRequestDTO) {
+        try {
+            UserResponseDTO resUserEntity = userService.update(userRequestDTO);
+
+            if (resUserEntity == null) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            return ResponseEntity.ok(resUserEntity);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PatchMapping("/update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody UserPasswordRequestDTO userPasswordRequestDTO) {
+        try {
+            boolean response = userService.updatePassword(userPasswordRequestDTO);
+
+            if (!response) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Your password not been update"));
+            }
+
+            return ResponseEntity.ok().body(Map.of("message", "Password update"));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestParam String userId) {
+        try {
+            userService.delete(userId);
+            return ResponseEntity.ok().body(Map.of("message", "User deleted"));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("message", e.getMessage()));
         }
     }
 }
