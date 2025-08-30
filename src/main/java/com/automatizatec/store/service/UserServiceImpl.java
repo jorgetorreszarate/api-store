@@ -3,9 +3,11 @@ package com.automatizatec.store.service;
 import com.automatizatec.store.dto.UserPasswordRequestDTO;
 import com.automatizatec.store.dto.UserRequestDTO;
 import com.automatizatec.store.dto.UserResponseDTO;
+import com.automatizatec.store.dto.UserSingleResponseDTO;
 import com.automatizatec.store.entity.UserEntity;
 import com.automatizatec.store.entity.UserTypeEntity;
 import com.automatizatec.store.mapper.UserMapper;
+import com.automatizatec.store.mapper.UserSingleMapper;
 import com.automatizatec.store.repository.UserRepository;
 import com.automatizatec.store.repository.UserTypeRepository;
 import com.automatizatec.store.utils.PasswordEncoderUtil;
@@ -19,18 +21,20 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
     private final UserMapper userMapper;
+    private final UserSingleMapper userSingleMapper;
     private final PasswordEncoderUtil passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository, UserMapper userMapper, PasswordEncoderUtil passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository, UserMapper userMapper, UserSingleMapper userSingleMapper, PasswordEncoderUtil passwordEncoder) {
         this.userRepository = userRepository;
         this.userTypeRepository = userTypeRepository;
         this.userMapper = userMapper;
+        this.userSingleMapper = userSingleMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public List<UserResponseDTO> findAll() throws Exception {
-        return userMapper.toDTO(userRepository.findAllCustom());
+        return userMapper.toDTO(userRepository.findAllActives());
     }
 
     @Override
@@ -38,6 +42,13 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userEntity = userRepository.findById(userId);
 
         return userEntity.map(userMapper::toDTO);
+    }
+
+    @Override
+    public Optional<UserSingleResponseDTO> findSingleById(String userId) throws Exception {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+
+        return userEntity.map(userSingleMapper::toDTO);
     }
 
     @Override
