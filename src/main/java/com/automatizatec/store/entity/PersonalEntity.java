@@ -1,6 +1,7 @@
 package com.automatizatec.store.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +46,7 @@ public class PersonalEntity {
     private LocalDate birthDate;
 
     @Column(name = "Genero", columnDefinition = "CHAR(1)")
+    @Pattern(regexp = "^[M|F]$", message = "Genre is M or F")
     private String genre;
 
     @Column(name = "Celular", length = 50)
