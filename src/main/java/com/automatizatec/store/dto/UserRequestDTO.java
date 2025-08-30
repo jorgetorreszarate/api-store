@@ -14,5 +14,4 @@ public class UserRequestDTO {
     private int personalId;
     private String password;
     private int userTypeId;
-    private boolean flagActive;
 }

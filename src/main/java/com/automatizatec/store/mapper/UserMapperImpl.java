@@ -4,7 +4,6 @@ import com.automatizatec.store.dto.UserRequestDTO;
 import com.automatizatec.store.dto.UserResponseDTO;
 import com.automatizatec.store.entity.PersonalEntity;
 import com.automatizatec.store.entity.UserEntity;
-import com.automatizatec.store.entity.UserTypeEntity;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,25 +24,27 @@ public class UserMapperImpl implements UserMapper {
         modelMapper.addMappings(new PropertyMap<UserEntity, UserResponseDTO>() {
             @Override
             protected void configure() {
-                //PersonalEntity personal = source.getPersonal();
-                //UserTypeEntity userType = source.getUserType();
-
+                // Mapeo directo
                 map().setPersonalId(source.getPersonal().getPersonalId());
-                //map().setFullName(personal.getName() + " " + personal.getFatherLastName() + " " + personal.getMotherLastName());
-                String fullName = source.getPersonal().getName();
-                map().setFullName(fullName);
-
                 map().setUserTypeId(source.getUserType().getTypeId());
                 map().setUserType(source.getUserType().getDetail());
+
+                // Mapeo con transformación (usando lambda)
+                using(ctx -> {
+                    PersonalEntity p = ((UserEntity) ctx.getSource()).getPersonal();
+                    if (p == null) return "";
+                    return String.join(" ", p.getName(), p.getFatherLastName(), p.getMotherLastName());
+                }).map(source, destination.getFullName());
             }
         });
 
         // DTO → Entity (crea objetos cascarón con solo ID)
-        modelMapper.addMappings(new PropertyMap<UserResponseDTO, UserEntity>() {
+        modelMapper.addMappings(new PropertyMap<UserRequestDTO, UserEntity>() {
             @Override
             protected void configure() {
                 map().getPersonal().setPersonalId(source.getPersonalId());
                 map().getUserType().setTypeId(source.getUserTypeId());
+                map().setFlagActive(true);
             }
         });
     }
