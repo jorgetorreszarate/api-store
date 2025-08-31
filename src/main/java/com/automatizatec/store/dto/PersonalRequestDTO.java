@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PersonalResponseDTO {
+public class PersonalRequestDTO {
     private int personalId;
     private int companyId;
     private  String companyName;
@@ -26,5 +26,6 @@ public class PersonalResponseDTO {
     private String cellphone;
     private String email;
     private String address;
+    private int personalRegisterId;
     private Boolean flagActive;
 }

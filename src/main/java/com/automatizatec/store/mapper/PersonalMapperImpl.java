@@ -1,10 +1,14 @@
 package com.automatizatec.store.mapper;
 
+import com.automatizatec.store.dto.PersonalRequestDTO;
 import com.automatizatec.store.dto.PersonalResponseDTO;
+import com.automatizatec.store.entity.CompanyEntity;
+import com.automatizatec.store.entity.PersonalDocumentEntity;
 import com.automatizatec.store.entity.PersonalEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -15,8 +19,10 @@ public class PersonalMapperImpl implements PersonalMapper {
         return PersonalResponseDTO
                 .builder()
                 .personalId(entity.getPersonalId())
-                .companyId(entity.getCompanyId())
-                .documentType(entity.getDocumentType())
+                .companyId(entity.getCompany().getCompanyId())
+                .companyName(entity.getCompany().getCompanyName())
+                .documentTypeId(entity.getDocumentType().getDocumentTypeId())
+                .documentType(entity.getDocumentType().getDetail())
                 .documentNumber(entity.getDocumentNumber())
                 .fatherLastName(entity.getFatherLastName())
                 .motherLastName(entity.getMotherLastName())
@@ -33,5 +39,37 @@ public class PersonalMapperImpl implements PersonalMapper {
     @Override
     public List<PersonalResponseDTO> toDTO(List<PersonalEntity> entities) {
         return entities.stream().map(this::toDTO).toList();
+    }
+
+    @Override
+    public PersonalEntity toEntity(PersonalRequestDTO dto) {
+        CompanyEntity companyEntity = CompanyEntity
+                .builder()
+                .companyId(dto.getCompanyId())
+                .build();
+
+        PersonalDocumentEntity personalDocumentEntity = PersonalDocumentEntity
+                .builder()
+                .documentTypeId(dto.getDocumentTypeId())
+                .build();
+
+        return PersonalEntity
+                .builder()
+                .personalId(dto.getPersonalId())
+                .company(companyEntity)
+                .documentType(personalDocumentEntity)
+                .documentNumber(dto.getDocumentNumber())
+                .fatherLastName(dto.getFatherLastName())
+                .motherLastName(dto.getMotherLastName())
+                .name(dto.getName())
+                .birthDate(dto.getBirthDate())
+                .genre(dto.getGenre())
+                .cellphone(dto.getCellphone())
+                .email(dto.getEmail())
+                .address(dto.getAddress())
+                .dateAt(LocalDateTime.now())
+                .personalRegisterId(dto.getPersonalRegisterId())
+                .flagActive(dto.getFlagActive())
+                .build();
     }
 }

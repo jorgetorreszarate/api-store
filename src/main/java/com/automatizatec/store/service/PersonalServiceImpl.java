@@ -1,11 +1,14 @@
 package com.automatizatec.store.service;
 
+import com.automatizatec.store.dto.PersonalRequestDTO;
 import com.automatizatec.store.dto.PersonalResponseDTO;
+import com.automatizatec.store.entity.PersonalEntity;
 import com.automatizatec.store.mapper.PersonalMapper;
 import com.automatizatec.store.repository.PersonalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonalServiceImpl implements PersonalService {
@@ -25,5 +28,35 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public List<PersonalResponseDTO> search(String value) throws Exception {
         return personalMapper.toDTO(personalRepository.search(value));
+    }
+
+    @Override
+    public Optional<PersonalResponseDTO> findById(int personalId) throws Exception {
+        Optional<PersonalEntity> personalEntity = personalRepository.findById(personalId);
+        return personalEntity.map(personalMapper::toDTO);
+    }
+
+    @Override
+    public int save(PersonalRequestDTO personalRequestDTO) throws Exception {
+        PersonalEntity personalEntity = personalMapper.toEntity(personalRequestDTO);
+        personalRepository.save(personalEntity);
+
+        return personalEntity.getPersonalId();
+    }
+
+    @Override
+    public boolean delete(int personalId) throws Exception {
+        Optional<PersonalEntity> personalEntity = personalRepository.findById(personalId);
+
+        if (personalEntity.isEmpty()) {
+            return false;
+        }
+
+        PersonalEntity prmPersonalEntity = personalEntity.get();
+        prmPersonalEntity.setFlagActive(false);
+
+        personalRepository.save(prmPersonalEntity);
+
+        return true;
     }
 }

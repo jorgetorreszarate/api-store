@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 public class UserSingleResponseDTO {
     private String userId;
     private int personalId;
+    private String name;
+    private String fatherLastName;
+    private String motherLastName;
     private String fullName;
+    private String email;
     private int userTypeId;
     private String userType;
     private String Password;

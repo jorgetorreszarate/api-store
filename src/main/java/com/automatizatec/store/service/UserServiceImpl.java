@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDTO> findAll() throws Exception {
-        return userMapper.toDTO(userRepository.findAllActives());
+    public List<UserResponseDTO> findAllByPersonal(int personalId) throws Exception {
+        return userMapper.toDTO(userRepository.findAllByPersonal(personalId));
     }
 
     @Override
@@ -101,14 +101,14 @@ public class UserServiceImpl implements UserService {
         UserEntity prmUserEntity = userEntity.get();
 
         // Validar la contraseña anterior contra la que está en BD
-        boolean isValid = passwordEncoder.verifyPassword(
+        /*boolean isValid = passwordEncoder.verifyPassword(
                 userPasswordRequestDTO.getOldPassword(),
                 prmUserEntity.getPassword()
         );
 
         if (!isValid) {
             return false;
-        }
+        }*/
 
         // Encriptar y actualizar nueva contraseña
         String hashedPassword = passwordEncoder.encode(userPasswordRequestDTO.getPassword());

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user-types")
+@RequestMapping("/api/v1/users/roles")
 public class UserTypeController {
     private final UserTypeService userTypeService;
 

@@ -23,8 +23,9 @@ public class PersonalEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personalId;
 
-    @Column(name = "IdEmpresa", nullable = false)
-    private int companyId;
+    @ManyToOne
+    @JoinColumn(name = "IdEmpresa", nullable = false)
+    private CompanyEntity company;
 
     @ManyToOne
     @JoinColumn(name = "IdTipoDocumento", nullable = false)

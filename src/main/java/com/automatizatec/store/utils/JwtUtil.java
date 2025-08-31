@@ -13,6 +13,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,7 +31,12 @@ public class JwtUtil {
     public String generateToken(UserSingleResponseDTO user) {
         Map<String, Object> claims = Map.of(
                 "role", user.getUserType(),
-                "fullName", user.getFullName()
+                "personalId", user.getPersonalId(),
+                "name", user.getName(),
+                "fatherLastName", user.getFatherLastName(),
+                "motherLastName", user.getMotherLastName(),
+                "fullName", user.getFullName(),
+                "email", Optional.ofNullable(user.getEmail()).orElse("")
         );
 
         return Jwts.builder()

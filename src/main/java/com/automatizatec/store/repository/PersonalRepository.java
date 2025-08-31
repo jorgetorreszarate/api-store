@@ -12,8 +12,7 @@ public interface PersonalRepository extends JpaRepository<PersonalEntity, Intege
     List<PersonalEntity> findAllActives();
 
     @Query("SELECT p FROM Personal p " +
-            "WHERE p.flagActive = true " +
-            "AND p.name LIKE CONCAT('%', :value, '%') " +
+            "WHERE p.name LIKE CONCAT('%', :value, '%') " +
             "OR p.fatherLastName LIKE CONCAT('%', :value, '%') " +
             "OR p.motherLastName LIKE CONCAT('%', :value, '%')")
     List<PersonalEntity> search(@Param("value") String value);

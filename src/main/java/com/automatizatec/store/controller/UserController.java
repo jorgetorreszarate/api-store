@@ -22,17 +22,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> findAll() throws Exception {
+    @GetMapping("/by-personal/{personalId}")
+    public ResponseEntity<List<UserResponseDTO>> findAllByPersonal(@PathVariable int personalId) throws Exception {
         try {
-            List<UserResponseDTO> users = userService.findAll();
+            List<UserResponseDTO> users = userService.findAllByPersonal(personalId);
             return ResponseEntity.ok(users);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-    @GetMapping("/retrieve")
+    @GetMapping
     public @ResponseBody ResponseEntity<?> findById(@RequestParam String userId) {
         try {
             Optional<UserResponseDTO> userResponseDTO = userService.findById(userId);

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    List<UserResponseDTO> findAll() throws Exception;
+    List<UserResponseDTO> findAllByPersonal(int personalId) throws Exception;
 
     Optional<UserResponseDTO> findById(String userId) throws Exception;
 

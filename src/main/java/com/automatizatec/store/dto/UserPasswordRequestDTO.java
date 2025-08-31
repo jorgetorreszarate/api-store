@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserPasswordRequestDTO {
     private String userId;
-    private String oldPassword;
+    //private String oldPassword;
     private String password;
 }
