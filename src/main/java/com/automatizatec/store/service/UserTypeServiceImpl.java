@@ -4,20 +4,17 @@ import com.automatizatec.store.dto.UserTypeResponseDTO;
 import com.automatizatec.store.entity.UserTypeEntity;
 import com.automatizatec.store.mapper.UserTypeMapper;
 import com.automatizatec.store.repository.UserTypeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserTypeServiceImpl implements UserTypeService {
     private final UserTypeRepository userTypeRepository;
     private final UserTypeMapper userTypeMapper;
-
-    public UserTypeServiceImpl(UserTypeRepository userTypeRepository, UserTypeMapper userTypeMapper) {
-        this.userTypeRepository = userTypeRepository;
-        this.userTypeMapper = userTypeMapper;
-    }
 
     @Override
     public List<UserTypeResponseDTO> findAll() {

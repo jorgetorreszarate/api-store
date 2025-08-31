@@ -11,26 +11,20 @@ import com.automatizatec.store.mapper.UserSingleMapper;
 import com.automatizatec.store.repository.UserRepository;
 import com.automatizatec.store.repository.UserTypeRepository;
 import com.automatizatec.store.utils.PasswordEncoderUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserTypeRepository userTypeRepository;
     private final UserMapper userMapper;
     private final UserSingleMapper userSingleMapper;
     private final PasswordEncoderUtil passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository, UserTypeRepository userTypeRepository, UserMapper userMapper, UserSingleMapper userSingleMapper, PasswordEncoderUtil passwordEncoder) {
-        this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
-        this.userMapper = userMapper;
-        this.userSingleMapper = userSingleMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public List<UserResponseDTO> findAllByPersonal(int personalId) throws Exception {
@@ -46,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserSingleResponseDTO> findSingleById(String userId) throws Exception {
-        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        Optional<UserEntity> userEntity = userRepository.findSingleByUserId(userId);
 
         return userEntity.map(userSingleMapper::toDTO);
     }

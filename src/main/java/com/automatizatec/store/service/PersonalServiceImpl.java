@@ -5,6 +5,7 @@ import com.automatizatec.store.dto.PersonalResponseDTO;
 import com.automatizatec.store.entity.PersonalEntity;
 import com.automatizatec.store.mapper.PersonalMapper;
 import com.automatizatec.store.repository.PersonalRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PersonalServiceImpl implements PersonalService {
     private final PersonalRepository personalRepository;
     private final PersonalMapper personalMapper;
-
-    public PersonalServiceImpl(PersonalRepository personalRepository, PersonalMapper personalMapper) {
-        this.personalRepository = personalRepository;
-        this.personalMapper = personalMapper;
-    }
 
     @Override
     public List<PersonalResponseDTO> findAll() throws Exception {

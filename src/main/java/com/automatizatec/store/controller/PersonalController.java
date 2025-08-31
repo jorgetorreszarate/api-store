@@ -5,6 +5,7 @@ import com.automatizatec.store.dto.PersonalResponseDTO;
 import com.automatizatec.store.entity.PersonalEntity;
 import com.automatizatec.store.service.PersonalService;
 import jakarta.validation.constraints.Pattern;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,13 +19,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/personal")
 @Validated
+@RequiredArgsConstructor
 public class PersonalController {
-
     private final PersonalService personalService;
-
-    public PersonalController(PersonalService personalService) {
-        this.personalService = personalService;
-    }
 
     @GetMapping
     public ResponseEntity<List<PersonalResponseDTO>> getAllActives() throws Exception {
