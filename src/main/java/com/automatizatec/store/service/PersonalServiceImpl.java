@@ -5,6 +5,8 @@ import com.automatizatec.store.dto.PersonalResponseDTO;
 import com.automatizatec.store.entity.PersonalEntity;
 import com.automatizatec.store.mapper.PersonalMapper;
 import com.automatizatec.store.repository.PersonalRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,11 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public List<PersonalResponseDTO> search(String value) throws Exception {
         return personalMapper.toDTO(personalRepository.search(value));
+    }
+
+    @Override
+    public Page<PersonalResponseDTO> findAllCustomPagingEntity(Pageable pageable) throws Exception {
+        return personalMapper.toDTO(pageable, personalRepository.findAllCustomPaging(pageable));
     }
 
     @Override

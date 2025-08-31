@@ -31,6 +31,8 @@ public class JwtUtil {
     public String generateToken(UserSingleResponseDTO user) {
         Map<String, Object> claims = Map.of(
                 "role", user.getUserType(),
+                "companyId", user.getCompanyId(),
+                "company", user.getCompany(),
                 "personalId", user.getPersonalId(),
                 "name", user.getName(),
                 "fatherLastName", user.getFatherLastName(),

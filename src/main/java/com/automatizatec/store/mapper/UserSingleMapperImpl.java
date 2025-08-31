@@ -12,6 +12,8 @@ public class UserSingleMapperImpl implements UserSingleMapper {
     public UserSingleResponseDTO toDTO(UserEntity entity) {
         return UserSingleResponseDTO
                 .builder()
+                .companyId(entity.getPersonal().getCompany().getCompanyId())
+                .company(entity.getPersonal().getCompany().getCompanyName())
                 .userId(entity.getUserId())
                 .userTypeId(entity.getUserType().getTypeId())
                 .personalId(entity.getPersonal().getPersonalId())

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserSingleResponseDTO {
+    private int companyId;
+    private String company;
     private String userId;
     private int personalId;
     private String name;

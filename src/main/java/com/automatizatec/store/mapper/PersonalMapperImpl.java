@@ -6,6 +6,9 @@ import com.automatizatec.store.entity.CompanyEntity;
 import com.automatizatec.store.entity.PersonalDocumentEntity;
 import com.automatizatec.store.entity.PersonalEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -71,5 +74,11 @@ public class PersonalMapperImpl implements PersonalMapper {
                 .personalRegisterId(dto.getPersonalRegisterId())
                 .flagActive(dto.getFlagActive())
                 .build();
+    }
+
+    @Override
+    public Page<PersonalResponseDTO> toDTO(Pageable pageable, Page<PersonalEntity> pagePersonalEntity) {
+        List<PersonalResponseDTO> lstPersonalRequestDTOs = pagePersonalEntity.getContent().stream().map(this::toDTO).toList();
+        return new PageImpl<>(lstPersonalRequestDTOs, pageable, lstPersonalRequestDTOs.size());
     }
 }
